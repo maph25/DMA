@@ -64,7 +64,7 @@ void DMA_init(void)
 	DMA0->TCD[0].NBYTES_MLNO = 8;/*byte number*/
 
 	DMA0->TCD[0].ATTR = 0;/*8 bit transfer size, in order to transfer see Kinetis user manual*/
-	DMA0->TCD[0].SLAST = -2;//restores the source address to the initial value, which is expressed in the amount of bytes to restore*/
+	DMA0->TCD[0].SLAST = 0;//restores the source address to the initial value, which is expressed in the amount of bytes to restore*/
 	DMA0->TCD[0].DLAST_SGA = 0;/*restores the destination address to the initial value, which is expressed in the amount of bytes to restore*/
 	DMA0->TCD[0].CSR = DMA_CSR_INTMAJOR_MASK;/*The end-of-major loop interrupt is enabled*/
 
