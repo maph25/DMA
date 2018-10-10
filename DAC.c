@@ -69,6 +69,12 @@ void triangular_led(){
 	GPIO_setPIN(GPIO_D, BIT0);
 	GPIO_setPIN(GPIO_D, BIT2);
 }
+void turn_rgb_off(){
+	//apagamos todos los leds
+	GPIO_setPIN(GPIO_B, BLUE_LED_PIN);
+	GPIO_setPIN(GPIO_B, RED_LED_PIN);
+	GPIO_setPIN(GPIO_E, GREEN_LED_PIN);
+}
 
 void Wave_gen(WaveType wave, SIZEWAVE){
 	switch(wave){
