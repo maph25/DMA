@@ -17,5 +17,8 @@ void sine_led();
 void square_led();
 void triangular_led();
 
+void DAC_clockGating(void);
+void DAC_output(void);
+
 void Wave_gen();
 #endif /* DAC_H_ */
