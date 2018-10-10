@@ -8,6 +8,11 @@
 #ifndef DAC_H_
 #define DAC_H_
 
+#include "Bits.h"
+
+#define DAC0_clockGating_mask 0x1000;
+#define DAC1_clockGating_mask 0x1001;
+
 void sine_led();
 void square_led();
 void triangular_led();
