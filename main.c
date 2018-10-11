@@ -4,7 +4,7 @@
 #include "Bits.h"
 #include <stdio.h>
 
-#define NUM_STEPS (1u)
+#define NUM_STEPS (101u)
 #define SYSTEM_CLOCK (21000000u)
 #define DELAY (0.01F)
 
@@ -27,16 +27,7 @@ uint16_t g_data_desti[ARRAY_SIZE]; //defines destination data space
 
 void DMA0_IRQHandler(void)
 {
-
-	uint8_t i;
-
 	DMA0->INT = DMA_CH0;
-
-	for ( i = 0; i < ARRAY_SIZE; ++i)
-	{
-		DAC0->DAT[i];
-	}
-
 }
 
 
@@ -52,7 +43,7 @@ void DMA_init(void)
 
 	DMAMUX->CHCFG[0] = 0;
 	DMAMUX->CHCFG[0] = DMAMUX_CHCFG_ENBL_MASK | /*enables DMA MUX channel*/
-					   DMAMUX_CHCFG_SOURCE(DMA_SOURCE_GPIO);/*source is FTM0 channel 0*/
+					   DMAMUX_CHCFG_SOURCE(1);/*source is FTM0 channel 0*/
 
 	DMA0->ERQ = 0x01;//enables DMA0 request
 
@@ -63,7 +54,7 @@ void DMA_init(void)
 
 	DMA0->TCD[0].CITER_ELINKNO = DMA_CITER_ELINKNO_CITER(NUM_STEPS);// NUM_STEPS;/*CITER = 1*/
 	DMA0->TCD[0].BITER_ELINKNO = DMA_BITER_ELINKNO_BITER(NUM_STEPS);/*BITER = 1*/
-	DMA0->TCD[0].NBYTES_MLNO = 101;/*byte number*/
+	DMA0->TCD[0].NBYTES_MLNO = 2;/*byte number*/
 
 	DMA0->TCD[0].ATTR = 0;/*8 bit transfer size, in order to transfer see Kinetis user manual*/
 	DMA0->TCD[0].SLAST = 0;//restores the source address to the initial value, which is expressed in the amount of bytes to restore*/
@@ -75,10 +66,7 @@ void DMA_init(void)
 
 int main(void)
 {
-	gpio_pin_control_register_t sw2 = GPIO_MUX1 | GPIO_PE | GPIO_PS | DMA_FALLING_EDGE; /* GPIO configured to trigger the DMA*/
 
-	GPIO_clock_gating(GPIO_C);
-	GPIO_pin_control_register(GPIO_C, bit_6, &sw2);
 	DMA_clock_gating();
 	DMA_init(); /* Configure the T*/
 	NVIC_enable_interrupt_and_priotity(DMA_CH0_IRQ, PRIORITY_5);
